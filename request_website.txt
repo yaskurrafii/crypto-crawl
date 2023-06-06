@@ -1,0 +1,4 @@
+- gains.trade
+- https://www.apollox.finance/en/futures/v2/BTCUSD
+- https://kwenta.io/
+- perps.coms
