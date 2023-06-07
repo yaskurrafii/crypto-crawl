@@ -8,7 +8,7 @@ data = json.load(json_file)
 res = []
 
 for key, value in data.items():
-    obj = SeleniumCrawl()
+    obj = SeleniumCrawl(debug=True)
     obj.get_website(value["url"])
     additional = value.get("additional_action", False)
     if additional:
@@ -32,7 +32,8 @@ for key, value in data.items():
             )
             data = obj.find_data(**data_path)
             res.append(data)
+        print(res)
     time.sleep(1)
-    obj.close()
+    # obj.close()
 
 print(res)

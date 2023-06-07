@@ -44,30 +44,38 @@ class SeleniumCrawl(webdriver.Chrome):
     def get_element(self, by, path, need_wait=False):
         try:
             if need_wait:
-                elem = WebDriverWait(self, 30).until(
+                print(path)
+                elem = WebDriverWait(self, 60).until(
                     EC.presence_of_element_located((self.by_dict[by], path))
                 )
-                self.implicitly_wait(2)
             else:
                 elem = self.find_element(by=self.by_dict[by], value=path)
             return elem
         except NoSuchElementException:
             logging.warning("No Element in that path, Try changing path or by")
-        except TimeoutException:
-            raise TimeoutException("Please Check your connection")
+        except TimeoutException as e:
+            logging.warning(f"Got Error Timeout in this path {path}\nError : {e}")
+            # raise TimeoutException("Please Check your connection")
 
     def change_pair_or_network(self, by, *args, **kwargs):
-        for path in args:
+        print(kwargs)
+        for path, do in args:
             fmt_path = path.format(**kwargs)
             elem = self.get_element(by, fmt_path, kwargs.get("need_wait", False))
             time.sleep(2)
-            elem.click()
+            if elem == None:
+                continue
+            if do.lower() == "click":
+                elem.click()
+            elif do.lower() == "search":
+                elem.send_keys(kwargs.get("pair"))
 
     def find_data(self, **kwargs):
         data = {}
         self.implicitly_wait(5)
         for key, value in kwargs.items():
             if value.get("path"):
+                print(value.get("path"))
                 elem = self.get_element(value.get("by"), value.get("path"))
                 data[key] = elem.text
             else:

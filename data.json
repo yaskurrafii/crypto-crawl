@@ -1,22 +1,47 @@
 {
   "gains.trade": {
     "pairs": {
-      "pair_list": ["EUR/USD", "BTC/USD"],
+      "pair_list": [
+        "EUR",
+        "BTC",
+        "COMP",
+        "AAPL",
+        "SPY",
+        "XAU",
+        "AAVE",
+        "abnb",
+        "ada",
+        "algo",
+        "amd",
+        "amzn"
+      ],
       "by": "xpath",
       "paths": [
-        "//button[contains(@class,'PairDropdownToggle_toggleButton__pZmUO')]",
-        "//button[@class='PairSelectionDropdownRow_container__xYYXo']/span[contains(text(), '{pair}')]"
+        [
+          "//button[contains(@class,'PairDropdownToggle_toggleButton__pZmUO')]",
+          "click"
+        ],
+        ["//input[contains(@placeholder,'Search')]", "search"],
+        [
+          "//button/span[contains(text(), '/USD')]",
+          "click"
+        ]
       ]
     },
     "additional_action": {
       "by": "xpath",
-      "path": ["//*[contains(text(), 'Continue')]"]
+      "path": [
+        ["//*[@id='__next']/div[4]/div/div/div/div/button/span", "click"]
+      ]
     },
     "network": {
       "by": "xpath",
       "paths": [
-        "//button[contains(@class, 'no-select')]",
-        "//button[contains(@class, 'NetworkDropdown_networkOption__Jv1Sl')]/span[contains(text(), '{network}')]"
+        ["//button[contains(@class, 'no-select')]", "click"],
+        [
+          "//button[contains(@class, 'NetworkDropdown_networkOption__Jv1Sl')]/span[contains(text(), '{network}')]",
+          "click"
+        ]
       ],
       "network_list": ["Arbitrum", "Polygon"]
     },
@@ -57,8 +82,15 @@
       "pair_list": ["BTCUSD", "ETHUSD", "BNBUSD"],
       "by": "xpath",
       "paths": [
-        "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[1]/div/div[1]/div",
-        "//a[contains(@class,'content')]//div[contains(text(),'{pair}')]"
+        [
+          "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[1]/div/div[1]/div",
+          "click"
+        ],
+        ["//input[contains(@placeholder,'Search')]", "search"],
+        [
+          "//a[contains(@class,'content')]//div[contains(text(),'{pair}')]",
+          "click"
+        ]
       ]
     },
     "network": {
@@ -81,7 +113,7 @@
       },
       "open_interest_s": {
         "by": "xpath",
-        "path": "//*[@id='__APP']/div/main/div[1]/div/div[2]/div[3]/div[2]"
+        "path": "//*[@id='__APP']/div/main/div[1]/div/div[2]/div[4]/div[2]"
       },
       "funding_i": {
         "by": "xpath",
@@ -100,11 +132,56 @@
   },
   "kwenta.io": {
     "pairs": {
-      "pair_list": ["BTC", "ETH", "BNB"],
+      "pair_list": [
+        "XAU",
+        "ETH",
+        "BNB",
+        "BCH",
+        "LTC",
+        "AAVE",
+        "GMX",
+        "XAG",
+        "SOL",
+        "AVAX",
+        "ATOM",
+        "APT",
+        "INJ",
+        "AXS",
+        "LINK",
+        "DOT",
+        "UNI",
+        "FIL",
+        "APE",
+        "LDO",
+        "DYDX",
+        "NEAR",
+        "OP",
+        "GBP",
+        "ARB",
+        "EUR",
+        "MATIC",
+        "SUI",
+        "CRV",
+        "AUD",
+        "FLOW",
+        "XRP",
+        "BLUR",
+        "ADA",
+        "FTM",
+        "TRX",
+        "DOGE",
+        "FLOKI",
+        "SHIB",
+        "PEPE"
+      ],
       "by": "xpath",
       "paths": [
-        "//div[@class='currency-meta']",
-        "//div[contains(@class, 'table-body-row')]//p[contains(text(), '{pair}')]"
+        ["//div[@class='currency-meta']", "click"],
+        ["//input[contains(@placeholder,'Search')]", "search"],
+        [
+          "//div[contains(@class, 'table-body-row')]//p[contains(text(), '{pair}')]",
+          "click"
+        ]
       ]
     },
     "network": {
