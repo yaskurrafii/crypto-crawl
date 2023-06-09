@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 from collections import namedtuple
 import time
 import logging
@@ -39,12 +40,11 @@ class SeleniumCrawl(webdriver.Chrome):
 
     def get_website(self, url):
         self.get(url)
-        self.implicitly_wait(5)
+        self.implicitly_wait(10)
 
     def get_element(self, by, path, need_wait=False):
         try:
             if need_wait:
-                print(path)
                 elem = WebDriverWait(self, 60).until(
                     EC.presence_of_element_located((self.by_dict[by], path))
                 )
@@ -61,14 +61,30 @@ class SeleniumCrawl(webdriver.Chrome):
         print(kwargs)
         for path, do in args:
             fmt_path = path.format(**kwargs)
-            elem = self.get_element(by, fmt_path, kwargs.get("need_wait", False))
-            time.sleep(2)
+            elem = self.get_element(by, fmt_path, kwargs.get("need_wait", True))
+            print(elem)
             if elem == None:
                 continue
             if do.lower() == "click":
+                time.sleep(2)
                 elem.click()
             elif do.lower() == "search":
+                clear = kwargs.get("clear_input", False)
+                if clear:
+                    self.clearing_input(By.XPATH, clear["path"], clear["action"])
                 elem.send_keys(kwargs.get("pair"))
+
+    def clearing_input(self, by, path, do):
+        elem = self.get_element(by, path)
+        if elem:
+            print(do)
+            if do.lower() == "clear":
+                elem.send_keys(Keys.CONTROL + 'a')
+                elem.send_keys(Keys.BACKSPACE)
+            elif do.lower() == "click":
+                elem.click()
+            else:
+                logging.warning("DONT HAVE THAT ACTION FOR CLEARING INPUT")
 
     def find_data(self, **kwargs):
         data = {}

@@ -1,0 +1,77 @@
+{
+  "gains.trade": {
+    "pairs": {
+      "pair_list": [
+        "EUR",
+        "BTC",
+        "COMP",
+        "AAPL",
+        "SPY",
+        "XAU",
+        "AAVE",
+        "abnb",
+        "ada",
+        "algo",
+        "amd",
+        "amzn"
+      ],
+      "by": "xpath",
+      "paths": [
+        [
+          "//button[contains(@class,'PairDropdownToggle_toggleButton__pZmUO')]",
+          "click"
+        ],
+        ["//input[contains(@placeholder,'Search')]", "search"],
+        ["//button/span[contains(text(), '/USD')]", "click"]
+      ]
+    },
+    "additional_action": {
+      "by": "xpath",
+      "path": [
+        ["//*[@id='__next']/div[4]/div/div/div/div/button/span", "click"]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [
+        ["//button[contains(@class, 'no-select')]", "click"],
+        [
+          "//button[contains(@class, 'NetworkDropdown_networkOption__Jv1Sl')]/span[contains(text(), '{network}')]",
+          "click"
+        ]
+      ],
+      "network_list": ["Arbitrum", "Polygon"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//*[@id='chart-panel']/div[1]/div[2]/div[2]/span[1]"
+      },
+      "network": {
+        "by": "xpath",
+        "path": "//*[@id='header']/div/nav/div[2]/div[1]/button/span"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//*[@id='chart-panel']/div[1]/div[2]/div[3]/div/div[1]/span[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//*[@id='chart-panel']/div[1]/div[2]/div[3]/div/div[2]/span[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//*[@id='chart-panel']/div[1]/div[2]/div[3]/div/div[3]/span[2]"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//*[@id='chart-panel']/div[1]/div[2]/div[3]/div/div[4]/span[2]"
+      },
+      "rollover": {
+        "by": "xpath",
+        "path": "//*[@id='chart-panel']/div[1]/div[2]/div[3]/div/div[5]/span[2]"
+      }
+    },
+    "url": "https://gains.trade/trading"
+  }
+}

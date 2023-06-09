@@ -1,0 +1,59 @@
+{
+  "apollox.finance": {
+    "pairs": {
+      "pair_list": ["BTCUSD", "ETHUSD", "SUIUSD"],
+      "by": "xpath",
+      "paths": [
+        [
+          "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[1]/div/div[1]/div",
+          "click"
+        ],
+        ["//input[contains(@placeholder,'Search')]", "search"],
+        [
+          "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[1]/div/div[2]/div/div/div[2]/div/a/div[1]/div/div/div[1]/div",
+          "click"
+        ]
+      ],
+      "clear": {
+        "path": "//input[contains(@placeholder,'Search')]",
+        "action": "clear"
+      }
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["BNB Chain"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[2]/div[1]"
+      },
+      "network": {
+        "by": "xpath",
+        "path": "//*[@id='networkDropdownMenuButton']"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//*[@id='__APP']/div/main/div[1]/div/div[2]/div[2]/div[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//*[@id='__APP']/div/main/div[1]/div/div[2]/div[4]/div[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//div[@class='css-4s78us']/div[4]/div[2]"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//div[@class='css-4s78us']/div[5]/div[2]"
+      },
+      "rollover": {
+        "by": "xpath",
+        "path": "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[2]/div[2]"
+      }
+    },
+    "url": "https://www.apollox.finance/en/futures/v2/"
+  }
+}

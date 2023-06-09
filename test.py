@@ -1,39 +1,30 @@
 import json
 from abstract import SeleniumCrawl
 import time
+import glob
+from multiprocessing import Process
 
-json_file = open("data.json")
-data = json.load(json_file)
+file_list = glob.glob("json/*.json")
+
+process = [None] * len(file_list)
 
 res = []
 
-for key, value in data.items():
-    obj = SeleniumCrawl(debug=True)
-    obj.get_website(value["url"])
-    additional = value.get("additional_action", False)
+
+def data_process(data):
+    obj = SeleniumCrawl(
+        debug=True, executable_path="C:/chromedriver_win32/chromedriver.exe"
+    )
+    data: dict = list(data.values())[0]
+    obj.get_website(data["url"])
+    additional = data.get("additional_action", False)
     if additional:
         obj.change_pair_or_network(additional["by"], *additional["path"])
 
-    wait_loader = value.get("wait_loader", "")
-    data_path = value.get("data_path", {})
-    pairs = value.get("pairs")
-    networks = value.get("network")
 
-    for network in networks.get("network_list"):
-        obj.change_pair_or_network(
-            networks.get("by"), *networks.get("paths"), network=network
-        )
-        for pair in pairs.get("pair_list", []):
-            obj.change_pair_or_network(
-                pairs.get("by", "xpath"),
-                *pairs.get("paths", ""),
-                pair=pair,
-                need_wait=True
-            )
-            data = obj.find_data(**data_path)
-            res.append(data)
-        print(res)
-    time.sleep(1)
-    # obj.close()
-
-print(res)
+if __name__ == "__main__":
+    for i in range(len(file_list)):
+        filed = open(file_list[i])
+        datas = json.load(filed)
+        process[i] = Process(target=data_process, args=[datas])
+        process[i].start()
