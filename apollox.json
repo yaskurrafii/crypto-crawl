@@ -1,7 +1,7 @@
 {
   "apollox.finance": {
     "pairs": {
-      "pair_list": ["BTCUSD", "ETHUSD", "SUIUSD"],
+      "pair_list": ["SUIUSD", "ETHUSD", "BTCUSD"],
       "by": "xpath",
       "paths": [
         [
@@ -10,12 +10,12 @@
         ],
         ["//input[contains(@placeholder,'Search')]", "search"],
         [
-          "//*[@id='__APP']/div/main/div[1]/div/div[1]/div[1]/div/div[2]/div/div/div[2]/div/a/div[1]/div/div/div[1]/div",
+          "//a[contains(@class,'content')]//div[contains(text(),'{pair}')]",
           "click"
         ]
       ],
       "clear": {
-        "path": "//input[contains(@placeholder,'Search')]",
+        "path": "//input[contains(@class,'trade-widget-search')]",
         "action": "clear"
       }
     },

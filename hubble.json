@@ -1,0 +1,45 @@
+{
+  "hubble.exchange": {
+    "pairs": {
+      "pair_list": ["AVAX-PERP"],
+      "by": "xpath",
+      "paths": [["//div[contains(@class,'market-select')]//button", "click"]]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["Hubble"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//div[contains(@class, 'mark-price')]//div[contains(@class,'text-sm')]/span"
+      },
+      "network": {
+        "by": "xpath",
+        "path": "//*[@id='layout']/main/div/div/div/div[1]/div/div/button/div/span"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//*[@id='layout']/main/div/div/div/div[3]/div/div[3]/div[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//*[@id='layout']/main/div/div/div/div[3]/div/div[3]/div[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//*[@id='layout']/main/div/div/div/div[3]/div/div[9]/div[2]"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//*[@id='layout']/main/div/div/div/div[3]/div/div[9]/div[2]"
+      },
+      "rollover": {
+        "by": "xpath",
+        "path": ""
+      }
+    },
+    "url": "https://app.hubble.exchange/"
+  }
+}

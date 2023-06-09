@@ -39,6 +39,7 @@ class SeleniumCrawl(webdriver.Chrome):
         super(SeleniumCrawl, self).__init__(options=options, *args, **kwargs)
 
     def get_website(self, url):
+        self.url = url
         self.get(url)
         self.implicitly_wait(10)
 
@@ -54,13 +55,16 @@ class SeleniumCrawl(webdriver.Chrome):
         except NoSuchElementException:
             logging.warning("No Element in that path, Try changing path or by")
         except TimeoutException as e:
-            logging.warning(f"Got Error Timeout in this path {path}\nError : {e}")
+            logging.warning(
+                f"Got Error Timeout in this path {path}\nError : {e}\nIn URL : {self.url}"
+            )
             # raise TimeoutException("Please Check your connection")
 
     def change_pair_or_network(self, by, *args, **kwargs):
         print(kwargs)
         for path, do in args:
             fmt_path = path.format(**kwargs)
+            print(fmt_path)
             elem = self.get_element(by, fmt_path, kwargs.get("need_wait", True))
             print(elem)
             if elem == None:
@@ -70,6 +74,7 @@ class SeleniumCrawl(webdriver.Chrome):
                 elem.click()
             elif do.lower() == "search":
                 clear = kwargs.get("clear_input", False)
+                print(clear)
                 if clear:
                     self.clearing_input(By.XPATH, clear["path"], clear["action"])
                 elem.send_keys(kwargs.get("pair"))
@@ -77,9 +82,8 @@ class SeleniumCrawl(webdriver.Chrome):
     def clearing_input(self, by, path, do):
         elem = self.get_element(by, path)
         if elem:
-            print(do)
             if do.lower() == "clear":
-                elem.send_keys(Keys.CONTROL + 'a')
+                elem.send_keys(Keys.CONTROL + "a")
                 elem.send_keys(Keys.BACKSPACE)
             elif do.lower() == "click":
                 elem.click()
@@ -98,5 +102,5 @@ class SeleniumCrawl(webdriver.Chrome):
                 data[key] = None
         return data
 
-    def cloes(self):
+    def close(self):
         super().close()

@@ -3,9 +3,9 @@ list of exchanges:
 2. https://www.apollox.finance/en/futures/v2/BTCUSD [v]
 3. https://kwenta.io/ [v]
 4. perps.com [x]
-5. https://app.hubble.exchange/
-6. https://app.gmx.io/#/trade
-7. https://trade.dydx.exchange/trade/ETH-USD
+5. https://app.hubble.exchange/ [v]
+6. https://app.gmx.io/#/trade [v]
+7. https://trade.dydx.exchange/trade/ETH-USD [v]
 8. https://helixapp.com/futures/btc-usdt-perp -> all pairs that have 'PERP' in
 9. https://trade.polynomial.fi/perps?market=sETHPERP
 10. https://alpha.conduit.lol/

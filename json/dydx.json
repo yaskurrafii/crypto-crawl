@@ -1,0 +1,50 @@
+{
+  "dydx.exchange": {
+    "pairs": {
+      "pair_list": [
+        "Bitcoin",
+        "Ethereum",
+        "Solana",
+        "Polygon",
+        "Sushi",
+        "Dogecoin"
+      ],
+      "by": "xpath",
+      "paths": [
+        ["//div[@class='_30_dV41WvMclCi77kevilg']", "click"],
+        [
+          "//div[@class='_3703-MxhX16pYBOSod3SpG']/span[contains(text(),'{pair}')]",
+          "click"
+        ]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["DYDX"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/main/div[1]/div[1]/div[2]/div[1]/span[1]/span"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/main/div[1]/div[1]/div[2]/div[2]/div[4]/div[2]/span"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/main/div[1]/div[1]/div[2]/div[2]/div[4]/div[2]/span"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/main/div[1]/div[1]/div[2]/div[2]/div[5]/div[2]/span"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/main/div[1]/div[1]/div[2]/div[2]/div[5]/div[2]/span"
+      }
+    },
+    "url": "https://trade.dydx.exchange/trade/ETH-USD"
+  }
+}

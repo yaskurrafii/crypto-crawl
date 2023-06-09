@@ -1,0 +1,46 @@
+{
+  "gmx.io": {
+    "pairs": {
+      "pair_list": ["ETH", "BTC", "LINK", "UNI", "WBTC", "AVAX"],
+      "by": "xpath",
+      "paths": [
+        ["//span[contains(@class, 'chart-token-selector--current')]", "click"],
+        ["//div[@class='menu-item']/span[contains(text(),'{pair}')]", "click"]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [
+        ["//div[contains(@class,'network-dropdown')]", "click"],
+        [
+          "//div[contains(@class,'menu-item-group')]/span[contains(text(),'{network}')]",
+          "click"
+        ]
+      ],
+      "network_list": ["Arbitrum", "Avalanche"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//div[@class='ExchangeChart-main-price']"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//div[contains(@class,'ExchangeChart-top-inner')]/div[4]/div[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//div[contains(@class,'ExchangeChart-top-inner')]/div[4]/div[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//div[contains(@class,'ExchangeChart-top-inner')]/div[3]/div[2]"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//div[contains(@class,'ExchangeChart-top-inner')]/div[3]/div[2]"
+      }
+    },
+    "url": "https://app.gmx.io/#/trade"
+  }
+}
