@@ -6,8 +6,8 @@ list of exchanges:
 5. https://app.hubble.exchange/ [v]
 6. https://app.gmx.io/#/trade [v]
 7. https://trade.dydx.exchange/trade/ETH-USD [v]
-8. https://helixapp.com/futures/btc-usdt-perp -> all pairs that have 'PERP' in
-9. https://trade.polynomial.fi/perps?market=sETHPERP
-10. https://alpha.conduit.lol/
-11. https://app.mux.network/#/trade?chainId=42161&unit=USD&market=ETH
+8. https://helixapp.com/futures/btc-usdt-perp -> all pairs that have 'PERP' in [v]
+9. https://trade.polynomial.fi/perps?market=sETHPERP[v]
+10. https://alpha.conduit.lol/ [v]
+11. https://app.mux.network/#/trade?chainId=42161&unit=USD&market=ETH[v]
 12. https://pro.apex.exchange/trade/BTCUSD

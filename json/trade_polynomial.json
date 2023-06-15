@@ -1,0 +1,44 @@
+{
+  "gains.trade": {
+    "pairs": {
+      "pair_list": ["BTC", "ETH", "SOL"],
+      "by": "xpath",
+      "paths": [
+        [
+          "//div[contains(@class,'items-center')]/img[contains(@alt,'logo')]",
+          "click"
+        ],
+        ["//div[contains(@class,'items-center')]/div/input", "search"],
+        ["//div[contains(text(),'{pair}')]", "click"]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["Polynomial"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//div[contains(@data-title,'Selected Market!')]/div[3]/div[2]"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//div[contains(@data-title,'Selected Market!')]/div[5]/div[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//div[contains(@data-title,'Selected Market!')]/div[6]/div[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//div[contains(@data-title,'Funding Rate')]/div/div/div[2]/div[1]"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//div[contains(@data-title,'Funding Rate')]/div/div/div[2]/div[1]"
+      }
+    },
+    "url": "https://trade.polynomial.fi/perps?market=sETHPERP"
+  }
+}

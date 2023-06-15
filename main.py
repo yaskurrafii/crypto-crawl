@@ -1,150 +1,93 @@
-from typing import Any
-from bs4 import BeautifulSoup as bs
-import requests
 import json
-from lxml import etree
-from abc import ABC, abstractmethod
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium_crawl import GainTradeSelenium
+from abstract import SeleniumCrawl
+import time
+import glob
+from multiprocessing import Pool
+import logging
+
+file_list = glob.glob("json/*.json")
+
+process = [None] * len(file_list)
+
+res = []
 
 
-# Init Selenium
-options = Options()
-options.add_experimental_option("detach", True)
-# options.add_argument("--headless")
-
-
-class EurUsdCrawl(ABC):
-    """
-    An Abstract Method for Eur Usd Crawl, it makes easy to build New Website if You want
-    """
-
-    def __init__(self, url: str, method: str, payload: dict = {}) -> None:
-        self.url = url
-        self.method = method
-        self.payload = payload
-        self.response = requests.request(
-            method=method.upper(), url=url, headers=self.headers, data=payload
+def getting_pair(sele: SeleniumCrawl, data_pair, data_path, network):
+    pair_list = data_pair.get("pair_list", [])
+    data_include = [
+        "price",
+        "network",
+        "open_interest_i",
+        "open_interest_s",
+        "funding_i",
+        "funding_s",
+        "rollover",
+    ]
+    all_data = []
+    if not data_pair.get("pair_list", True):
+        raise ValueError("Do not have pair_list")
+    for pair in pair_list:
+        sele.change_pair_or_network(
+            data_pair["by"],
+            *data_pair["paths"],
+            pair=pair,
+            need_wait=True,
+            clear_input=data_pair.get("clear", {}),
         )
-
-    @abstractmethod
-    def parsing(
-        self,
-    ):
-        raise NotImplementedError
-
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
-        return self.data_crawl
-
-    def add_other_item(self, items: dict):
-        for item_name, item in items.items():
-            self.data_crawl[item_name] = item
+        data = sele.find_data(**data_path)
+        for i in data_include:
+            if i not in list(data.keys()):
+                data[i] = "-"
+        data["network"] = network
+        all_data.append(data)
+        sele.refresh()
+    return all_data
 
 
-class Apollox(EurUsdCrawl):
-    url = "https://www.apollox.finance/en/futures/v2/EURUSD"
-    method = "get"
-    xpath = "//head/title/text()"
-    get_first = True
-    payload = {}
-
-    def __init__(self) -> None:
-        super().__init__(self.url, self.method, self.payload)
-
-    def parsing(self):
-        soup = bs(self.response.text, "html.parser")
-        doc = etree.HTML(str(soup))
-        item = doc.xpath(self.xpath)
-        if self.get_first:
-            item = item[0]
-        item = self.pre_process(item)
-        self.data_crawl["price"] = item
-
-    def pre_process(self, item: str):
-        item = item.split("|")[0]
-        return item
+def change_network(sele: SeleniumCrawl, data):
+    data_network = data["network"]
+    network_list = data_network["network_list"]
+    res
+    for network in network_list:
+        sele.change_pair_or_network(
+            data_network["by"], *data_network["paths"], network=network
+        )
+        pair = getting_pair(sele, data["pairs"], data["data_path"], network)
+        res.append(pair)
+    return {"data": res}
 
 
-def creating_data_from_obj(file_name: str, data):
-    data = {"data": data}
-    with open(f"{file_name}.json", "w") as f:
+def writing_result(data: dict, file_path):
+    if "\\" in file_path:
+        file_name = file_path.split("\\")[-1]
+        file_name = f"output/{file_name}"
+    else:
+        file_name = file_path
+    with open(f"{file_name}", "w") as f:
         f.write(json.dumps(data))
-    return data
 
 
-def main(file_name, **kwargs):
-    data = {}
-    apollox = Apollox()
-    apollox.parsing()
-    apollox.add_other_item(
-        {"network": "BNB Chain", "website": "apollox.finance", "pair": "EURUSD"}
-    )
-    data["apollox"] = apollox()
+def data_process(file_name):
+    filed = open(file_name)
+    data = json.load(filed)
+    obj = SeleniumCrawl(debug=True)
+    data: dict = list(data.values())[0]
+    try:
+        obj.get_website(data["url"])
+        additional = data.get("additional_action", False)
+        if additional:
+            obj.change_pair_or_network(additional["by"], *additional["path"])
+        res = change_network(obj, data)
+        obj.close()
+        writing_result(res, file_name)
 
-    # Gain Trade crawl start
-
-    # Polygon
-    polygon = GainTradeSelenium(options)
-    data["polygon"] = polygon.run(
-        "https://gains.trade/trading#EUR-USD",
-        network=(By.XPATH, "//*[@id='header']/div/nav/div[2]/div[1]/button/span"),
-        price=(By.XPATH, '//*[@id="chart-panel"]/div[1]/div[2]/div[2]/span[1]'),
-        open_interest_i=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[1]/span[2]',
-        ),
-        open_interest_s=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[2]/span[2]',
-        ),
-        funding_i=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[3]/span[2]',
-        ),
-        funding_s=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[4]/span[2]',
-        ),
-        rollover=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[5]/span[2]',
-        ),
-    )
-
-    # Arbitrum
-    data["arbitrum"] = polygon.run(
-        "https://gains.trade/trading#EUR-USD",
-        need_change=True,
-        path_change=[
-            "//*[@id='header']/div/nav/div[2]/div[1]/button",
-            '//*[@id="header"]/div/nav/div[2]/div[1]/div/div/div/button[2]',
-        ],
-        network=(By.XPATH, "//*[@id='header']/div/nav/div[2]/div[1]/button/span"),
-        price=(By.XPATH, '//*[@id="chart-panel"]/div[1]/div[2]/div[2]/span[1]'),
-        open_interest_i=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[1]/span[2]',
-        ),
-        open_interest_s=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[2]/span[2]',
-        ),
-        funding_i=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[3]/span[2]',
-        ),
-        funding_s=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[4]/span[2]',
-        ),
-        rollover=(
-            By.XPATH,
-            '//*[@id="chart-panel"]/div[1]/div[2]/div[3]/div/div[5]/span[2]',
-        ),
-    )
-    polygon.close()
-    data = creating_data_from_obj(file_name, data)
+    except:
+        logging.warning(f"Error in while processing file {file_name}")
+        obj.close()
 
 
-main("result")
+if __name__ == "__main__":
+    pool = Pool(processes=2)
+    pool.map(data_process, file_list)
+    pool.close()
+    pool.join()

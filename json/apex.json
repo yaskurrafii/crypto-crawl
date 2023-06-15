@@ -1,0 +1,50 @@
+{
+  "gains.trade": {
+    "pairs": {
+      "pair_list": ["BTC", "ETH", "AVAX"],
+      "by": "xpath",
+      "paths": [
+        ["//div[contains(@class,'pair-txt')]", "click"],
+        [
+          "//div[contains(@class,'symbol-item')]/div[contains(text(),'{pair}')]",
+          "click"
+        ]
+      ]
+    },
+    "additional_action": {
+      "by": "xpath",
+      "path": [
+        ["//div[contains(@class,'guide-btn-ctr')]", "click"],
+        ["//*[@class='x-dialog-close']", "click"]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["APEX"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/div[2]/div/div[1]/div[3]/div[2]"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/div[2]/div/div[1]/div[6]/div[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//*[@id='root']/div/div[2]/div/div[1]/div[7]/div[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//div[contains(@aria-label,'fees')]/div[2]/span"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//div[contains(@aria-label,'fees')]/div[2]/span"
+      }
+    },
+    "url": "https://pro.apex.exchange/trade/BTCUSD"
+  }
+}

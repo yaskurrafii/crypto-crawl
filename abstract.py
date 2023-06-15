@@ -61,12 +61,9 @@ class SeleniumCrawl(webdriver.Chrome):
             # raise TimeoutException("Please Check your connection")
 
     def change_pair_or_network(self, by, *args, **kwargs):
-        print(kwargs)
         for path, do in args:
             fmt_path = path.format(**kwargs)
-            print(fmt_path)
             elem = self.get_element(by, fmt_path, kwargs.get("need_wait", True))
-            print(elem)
             if elem == None:
                 continue
             if do.lower() == "click":
@@ -74,7 +71,6 @@ class SeleniumCrawl(webdriver.Chrome):
                 elem.click()
             elif do.lower() == "search":
                 clear = kwargs.get("clear_input", False)
-                print(clear)
                 if clear:
                     self.clearing_input(By.XPATH, clear["path"], clear["action"])
                 elem.send_keys(kwargs.get("pair"))
@@ -95,7 +91,6 @@ class SeleniumCrawl(webdriver.Chrome):
         self.implicitly_wait(5)
         for key, value in kwargs.items():
             if value.get("path"):
-                print(value.get("path"))
                 elem = self.get_element(value.get("by"), value.get("path"))
                 data[key] = elem.text
             else:

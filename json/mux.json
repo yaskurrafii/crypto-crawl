@@ -1,0 +1,47 @@
+{
+  "gains.trade": {
+    "pairs": {
+      "pair_list": ["ETH", "BTC"],
+      "by": "xpath",
+      "paths": [
+        ["//div[contains(@class,'market-info')]", "click"],
+        ["//input[contains(@placeholder,'Search')]", "search"],
+        ["//div[contains(@class,'name-info')]", "click"]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [
+        ["//div[contains(@class,'chain-name-wrapper')]", "click"],
+        [
+          "//div[contains(@class,'network-item')]/div/img[contains(@src,'{network}')]",
+          "click"
+        ]
+      ],
+      "network_list": ["arbitrum", "bsc", "optimism"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//div[@class='price']"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//div[@class='open-interest']/div[@class='value']/span"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//div[@class='open-interest']/div[@class='value']/span"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "//div[@class='funding-box']/div[@class='value']/span"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "//div[@class='funding-box']/div[@class='value']/span"
+      }
+    },
+    "url": "https://app.mux.network/#/trade?chainId=42161&unit=USD&market=ETH"
+  }
+}

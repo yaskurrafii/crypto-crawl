@@ -1,0 +1,42 @@
+{
+  "helixapp": {
+    "pairs": {
+      "pair_list": ["BTC", "INJ", "BNB", "ETH", "ATOM"],
+      "by": "xpath",
+      "paths": [
+        [
+          "//span[contains(@data-cy,'trading-page-ticker-name-text-content')]",
+          "click"
+        ],
+        [
+          "//a[contains(@data-cy,'markets-trade-link')]/div/span[contains(text(),'{pair}/USDT PERP')]",
+          "click"
+        ]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["HELIXAPP"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "//span[@data-cy='market-info-mark-price-span']"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "//span[@data-cy='market-info-high-price-24h-span']"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "//span[@data-cy='market-info-low-price-24h-span']"
+      },
+      "rollover": {
+        "by": "xpath",
+        "path": "//span[@data-cy='market-info-funding-rate-span']"
+      }
+    },
+    "url": "https://helixapp.com/futures/btc-usdt-perp/"
+  }
+}

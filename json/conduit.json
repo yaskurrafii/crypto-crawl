@@ -1,0 +1,40 @@
+{
+  "gains.trade": {
+    "pairs": {
+      "pair_list": ["ETH", "BNB", "AXS"],
+      "by": "xpath",
+      "paths": [
+        ["//button[contains(@aria-haspopup,'menu')]/div", "click"],
+        ["//a[contains(@href,'{pair}')]", "click"]
+      ]
+    },
+    "network": {
+      "by": "xpath",
+      "paths": [],
+      "network_list": ["Conduit"]
+    },
+    "data_path": {
+      "price": {
+        "by": "xpath",
+        "path": "/html/body/div[1]/div/div[3]/div[2]/div[1]/span[2] | //button[contains(@aria-haspopup,'menu')]/div/div/span[2]"
+      },
+      "open_interest_i": {
+        "by": "xpath",
+        "path": "/html/body/div[1]/div/div[3]/div[2]/div[3]/span[2]"
+      },
+      "open_interest_s": {
+        "by": "xpath",
+        "path": "/html/body/div[1]/div/div[3]/div[2]/div[4]/span[2]"
+      },
+      "funding_i": {
+        "by": "xpath",
+        "path": "/html/body/div[1]/div/div[3]/div[2]/div[2]/span[2]"
+      },
+      "funding_s": {
+        "by": "xpath",
+        "path": "/html/body/div[1]/div/div[3]/div[2]/div[2]/span[2]"
+      }
+    },
+    "url": "https://alpha.conduit.lol/"
+  }
+}
