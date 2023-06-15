@@ -46,7 +46,7 @@ class SeleniumCrawl(webdriver.Chrome):
     def get_element(self, by, path, need_wait=False):
         try:
             if need_wait:
-                elem = WebDriverWait(self, 60).until(
+                elem = WebDriverWait(self, 15).until(
                     EC.presence_of_element_located((self.by_dict[by], path))
                 )
             else:

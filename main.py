@@ -39,6 +39,7 @@ def getting_pair(sele: SeleniumCrawl, data_pair, data_path, network):
             if i not in list(data.keys()):
                 data[i] = "-"
         data["network"] = network
+        data["pair"] = pair
         all_data.append(data)
         sele.refresh()
     return all_data

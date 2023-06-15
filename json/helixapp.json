@@ -1,7 +1,13 @@
 {
   "helixapp": {
     "pairs": {
-      "pair_list": ["BTC", "INJ", "BNB", "ETH", "ATOM"],
+      "pair_list": [
+        "BTC/USDT PERP",
+        "INJ/USDT PERP",
+        "BNB/USDT PERP",
+        "ETH/USDT PERP",
+        "ATOM/USDT PERP"
+      ],
       "by": "xpath",
       "paths": [
         [
@@ -9,7 +15,7 @@
           "click"
         ],
         [
-          "//a[contains(@data-cy,'markets-trade-link')]/div/span[contains(text(),'{pair}/USDT PERP')]",
+          "//a[contains(@data-cy,'markets-trade-link')]/div/span[contains(text(),'{pair}')]",
           "click"
         ]
       ]
